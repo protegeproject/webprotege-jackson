@@ -8,7 +8,7 @@
 		<version>2.5.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>edu.stanford.protege.webprotege.jackson</groupId>
+	<groupId>edu.stanford.protege</groupId>
 	<artifactId>webprotege-owlapi-jackson</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>webprotege-owlapi-jackson</name>
