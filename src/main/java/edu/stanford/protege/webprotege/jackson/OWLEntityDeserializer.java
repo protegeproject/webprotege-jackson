@@ -20,18 +20,14 @@ import java.io.IOException;
  * 18 Jun 2018
  */
 @JsonComponent
-public class OWLEntityDeserializerBase<E extends OWLEntity> extends StdDeserializer<E> {
+public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<E> {
 
     @Nonnull
     private final OWLDataFactory dataFactory;
 
-    @Nonnull
-//    private final Class<E> cls;
-
-    public OWLEntityDeserializerBase(@Nonnull OWLDataFactory dataFactory) {
+    public OWLEntityDeserializer(@Nonnull OWLDataFactory dataFactory) {
         super(OWLEntity.class);
         this.dataFactory = dataFactory;
-//        this.cls = cls;
     }
 
     @Override
@@ -55,12 +51,6 @@ public class OWLEntityDeserializerBase<E extends OWLEntity> extends StdDeseriali
         }
         if (type != null && iri != null) {
             return (E) dataFactory.getOWLEntity(type, iri);
-//            if (cls.isInstance(owlEntity)) {
-//                return cls.cast(owlEntity);
-//            }
-//            else {
-//                throw new JsonParseException(jsonParser, "Expected " + cls.getSimpleName() + " found " + owlEntity.getEntityType());
-//            }
         }
         else {
             if(type == null) {

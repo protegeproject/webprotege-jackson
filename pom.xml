@@ -31,6 +31,10 @@
 			<artifactId>owlapi-impl</artifactId>
 			<version>4.5.13</version>
 		</dependency>
+		<dependency>
+		<groupId>com.fasterxml.jackson.datatype</groupId>
+		<artifactId>jackson-datatype-guava</artifactId>
+	</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

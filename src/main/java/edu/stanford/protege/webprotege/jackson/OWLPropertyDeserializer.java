@@ -1,12 +1,11 @@
 package edu.stanford.protege.webprotege.jackson;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLEntity;
 import org.semanticweb.owlapi.model.OWLProperty;
+import org.springframework.boot.jackson.JsonComponent;
 
 import javax.annotation.Nonnull;
 import java.io.IOException;
@@ -18,15 +17,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-04
  */
+@JsonComponent
 public class OWLPropertyDeserializer<P extends OWLProperty> extends StdDeserializer<P> {
 
     @Nonnull
-    private final OWLEntityDeserializerBase deserializer;
-
+    private final OWLEntityDeserializer<P> deserializer;
 
     public OWLPropertyDeserializer(@Nonnull OWLDataFactory dataFactory) {
         super(OWLProperty.class);
-        deserializer = new OWLEntityDeserializerBase<>(dataFactory);
+        deserializer = new OWLEntityDeserializer<>(dataFactory);
     }
 
     @Override
