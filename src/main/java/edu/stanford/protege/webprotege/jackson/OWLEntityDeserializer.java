@@ -22,6 +22,8 @@ import java.io.IOException;
 @JsonComponent
 public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<E> {
 
+    private static final String TYPE_FIELD_LEGACY_NAME = "type";
+
     @Nonnull
     private final OWLDataFactory dataFactory;
 
@@ -40,11 +42,11 @@ public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<
         IRI iri = null;
         while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
             String fieldname = jsonParser.getCurrentName();
-            if ("type".equals(fieldname)) {
+            if (OWLEntitySerializer.TYPE_FIELD_NAME.equals(fieldname) || TYPE_FIELD_LEGACY_NAME.equals(fieldname)) {
                 jsonParser.nextToken();
                 type = jsonParser.readValueAs(EntityType.class);
             }
-            else if("iri".equals(fieldname)) {
+            else if(OWLEntitySerializer.IRI_FIELD_NAME.equals(fieldname)) {
                 jsonParser.nextToken();
                 iri = jsonParser.readValueAs(IRI.class);
             }
@@ -54,10 +56,10 @@ public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<
         }
         else {
             if(type == null) {
-                throw new JsonParseException(jsonParser, "type field is missing");
+                throw new JsonParseException(jsonParser, OWLEntitySerializer.TYPE_FIELD_NAME + " field is missing");
             }
             else {
-                throw new JsonParseException(jsonParser, "iri field is missing");
+                throw new JsonParseException(jsonParser, OWLEntitySerializer.IRI_FIELD_NAME + " field is missing");
             }
         }
     }

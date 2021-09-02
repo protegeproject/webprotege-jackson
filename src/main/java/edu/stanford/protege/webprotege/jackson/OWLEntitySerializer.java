@@ -16,6 +16,10 @@ import java.io.IOException;
 @JsonComponent
 public class OWLEntitySerializer extends StdSerializer<OWLEntity> {
 
+    public static final String TYPE_FIELD_NAME = "@type";
+
+    public static final String IRI_FIELD_NAME = "iri";
+
     public OWLEntitySerializer() {
         super(OWLEntity.class);
     }
@@ -23,9 +27,9 @@ public class OWLEntitySerializer extends StdSerializer<OWLEntity> {
     @Override
     public void serialize(OWLEntity entity, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
-        jsonGenerator.writeFieldName("type");
+        jsonGenerator.writeFieldName(TYPE_FIELD_NAME);
         jsonGenerator.writeObject(entity.getEntityType());
-        jsonGenerator.writeFieldName("iri");
+        jsonGenerator.writeFieldName(IRI_FIELD_NAME);
         jsonGenerator.writeObject(entity.getIRI());
         jsonGenerator.writeEndObject();
     }

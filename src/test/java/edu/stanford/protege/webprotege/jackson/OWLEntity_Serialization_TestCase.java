@@ -22,6 +22,10 @@ public class OWLEntity_Serialization_TestCase {
 
     public static final String IRI_STRING = "http://example.org/x";
 
+    public static final String TYPE = "['@type']";
+
+    public static final String IRI_KEY = "iri";
+
     @Autowired
     private JacksonTester<OWLEntity> tester;
 
@@ -34,48 +38,61 @@ public class OWLEntity_Serialization_TestCase {
     void shouldWriteOwlClass() throws IOException {
         var entity = dataFactory.getOWLClass(iri);
         var json = tester.write(entity);
-        assertThat(json).hasJsonPathValue("iri", IRI_STRING);
-        assertThat(json).hasJsonPathValue("type", "owl:Class");
+        assertThat(json).hasJsonPathValue(IRI_KEY, IRI_STRING);
+        assertThat(json).hasJsonPathValue(
+                TYPE, "Class");
     }
     
     @Test
     void shouldWriteOwlDatatype() throws IOException {
         var entity = dataFactory.getOWLDatatype(iri);
         var json = tester.write(entity);
-        assertThat(json).extractingJsonPathStringValue("iri").isEqualTo(IRI_STRING);
-        assertThat(json).extractingJsonPathStringValue("type").isEqualTo("rdfs:Datatype");
+        assertThat(json).extractingJsonPathStringValue(IRI_KEY).isEqualTo(IRI_STRING);
+        assertThat(json).extractingJsonPathStringValue(TYPE).isEqualTo("Datatype");
     }
     
     @Test
     void shouldWriteOwlNamedIndividual() throws IOException {
         var entity = dataFactory.getOWLNamedIndividual(iri);
         var json = tester.write(entity);
-        assertThat(json).extractingJsonPathStringValue("iri").isEqualTo(IRI_STRING);
-        assertThat(json).extractingJsonPathStringValue("type").isEqualTo("owl:NamedIndividual");
+        assertThat(json).extractingJsonPathStringValue(IRI_KEY).isEqualTo(IRI_STRING);
+        assertThat(json).extractingJsonPathStringValue(TYPE).isEqualTo("NamedIndividual");
     }
 
     @Test
     void shouldWriteOwlObjectProperty() throws IOException {
         var entity = dataFactory.getOWLObjectProperty(iri);
         var json = tester.write(entity);
-        assertThat(json).extractingJsonPathStringValue("iri").isEqualTo(IRI_STRING);
-        assertThat(json).extractingJsonPathStringValue("type").isEqualTo("owl:ObjectProperty");
+        assertThat(json).extractingJsonPathStringValue(IRI_KEY).isEqualTo(IRI_STRING);
+        assertThat(json).extractingJsonPathStringValue(TYPE).isEqualTo("ObjectProperty");
     }
 
     @Test
     void shouldWriteOwlDataProperty() throws IOException {
         var entity = dataFactory.getOWLDataProperty(iri);
         var json = tester.write(entity);
-        assertThat(json).extractingJsonPathStringValue("iri").isEqualTo(IRI_STRING);
-        assertThat(json).extractingJsonPathStringValue("type").isEqualTo("owl:DatatypeProperty");
+        assertThat(json).extractingJsonPathStringValue(IRI_KEY).isEqualTo(IRI_STRING);
+        assertThat(json).extractingJsonPathStringValue(TYPE).isEqualTo("DataProperty");
     }
 
     @Test
     void shouldWriteOwlAnnotationProperty() throws IOException {
         var entity = dataFactory.getOWLAnnotationProperty(iri);
         var json = tester.write(entity);
-        assertThat(json).extractingJsonPathStringValue("iri").isEqualTo(IRI_STRING);
-        assertThat(json).extractingJsonPathStringValue("type").isEqualTo("owl:AnnotationProperty");
+        assertThat(json).extractingJsonPathStringValue(IRI_KEY).isEqualTo(IRI_STRING);
+        assertThat(json).extractingJsonPathStringValue(TYPE).isEqualTo("AnnotationProperty");
+    }
+
+    @Test
+    void shouldReadClass() throws IOException {
+        var json = """
+                {
+                    "iri" : "http://example.org/x",
+                    "@type" : "Class"
+                }
+                """;
+        var parsed = tester.parse(json);
+        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLClass(IRI.create(IRI_STRING)));
     }
 
     @Test
@@ -91,7 +108,19 @@ public class OWLEntity_Serialization_TestCase {
     }
 
     @Test
-    void shouldReadOwlDatatype() throws IOException {
+    void shouldReadDatatype() throws IOException {
+        var json = """
+                {
+                    "iri" : "http://example.org/x",
+                    "@type" : "Datatype"
+                }
+                """;
+        var parsed = tester.parse(json);
+        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLDatatype(IRI.create(IRI_STRING)));
+    }
+
+    @Test
+    void shouldReadRdfsDatatype() throws IOException {
         var json = """
                 {
                     "iri" : "http://example.org/x",
@@ -100,6 +129,18 @@ public class OWLEntity_Serialization_TestCase {
                 """;
         var parsed = tester.parse(json);
         assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLDatatype(IRI.create(IRI_STRING)));
+    }
+
+    @Test
+    void shouldReadNamedIndividual() throws IOException {
+        var json = """
+                {
+                    "iri" : "http://example.org/x",
+                    "@type" : "NamedIndividual"
+                }
+                """;
+        var parsed = tester.parse(json);
+        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLNamedIndividual(IRI.create(IRI_STRING)));
     }
 
     @Test
@@ -112,6 +153,18 @@ public class OWLEntity_Serialization_TestCase {
                 """;
         var parsed = tester.parse(json);
         assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLNamedIndividual(IRI.create(IRI_STRING)));
+    }
+
+    @Test
+    void shouldReadObjectProperty() throws IOException {
+        var json = """
+                {
+                    "iri" : "http://example.org/x",
+                    "@type" : "ObjectProperty"
+                }
+                """;
+        var parsed = tester.parse(json);
+        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLObjectProperty(IRI.create(IRI_STRING)));
     }
 
     @Test
@@ -128,6 +181,18 @@ public class OWLEntity_Serialization_TestCase {
 
 
     @Test
+    void shouldReadDataProperty() throws IOException {
+        var json = """
+                {
+                    "iri" : "http://example.org/x",
+                    "@type" : "DataProperty"
+                }
+                """;
+        var parsed = tester.parse(json);
+        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLDataProperty(IRI.create(IRI_STRING)));
+    }
+
+    @Test
     void shouldReadOwlDataProperty() throws IOException {
         var json = """
                 {
@@ -137,6 +202,18 @@ public class OWLEntity_Serialization_TestCase {
                 """;
         var parsed = tester.parse(json);
         assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLDataProperty(IRI.create(IRI_STRING)));
+    }
+
+    @Test
+    void shouldReadAnnotationProperty() throws IOException {
+        var json = """
+                {
+                    "iri" : "http://example.org/x",
+                    "@type" : "AnnotationProperty"
+                }
+                """;
+        var parsed = tester.parse(json);
+        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLAnnotationProperty(IRI.create(IRI_STRING)));
     }
 
     @Test
