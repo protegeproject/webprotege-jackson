@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.semanticweb.owlapi.model.OWLEntity;
 import org.springframework.boot.jackson.JsonComponent;
@@ -13,7 +14,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 23 Apr 2018
  */
-@JsonComponent
+//
 public class OWLEntitySerializer extends StdSerializer<OWLEntity> {
 
     public static final String TYPE_FIELD_NAME = "@type";
@@ -30,7 +31,15 @@ public class OWLEntitySerializer extends StdSerializer<OWLEntity> {
         jsonGenerator.writeFieldName(TYPE_FIELD_NAME);
         jsonGenerator.writeObject(entity.getEntityType());
         jsonGenerator.writeFieldName(IRI_FIELD_NAME);
-        jsonGenerator.writeObject(entity.getIRI());
+        jsonGenerator.writeString(entity.getIRI().toString());
         jsonGenerator.writeEndObject();
+    }
+
+    @Override
+    public void serializeWithType(OWLEntity value,
+                                  JsonGenerator gen,
+                                  SerializerProvider serializers,
+                                  TypeSerializer typeSer) throws IOException {
+        serialize(value, gen, serializers);
     }
 }

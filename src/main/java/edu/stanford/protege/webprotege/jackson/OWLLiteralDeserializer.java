@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -18,7 +19,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-04
  */
-@JsonComponent
+
 public class OWLLiteralDeserializer extends StdDeserializer<OWLLiteral> {
 
     @Nonnull
@@ -30,12 +31,19 @@ public class OWLLiteralDeserializer extends StdDeserializer<OWLLiteral> {
     }
 
     @Override
+    public Object deserializeWithType(JsonParser p,
+                                      DeserializationContext ctxt,
+                                      TypeDeserializer typeDeserializer) throws IOException {
+        return deserialize(p, ctxt);
+    }
+
+    @Override
     public OWLLiteral deserialize(JsonParser jsonParser,
                                   DeserializationContext ctxt) throws IOException {
 
         String value = null;
         String lang = null;
-        IRI iri = null;
+        String iri = null;
         while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
             String fieldname = jsonParser.getCurrentName();
             if ("lang".equals(fieldname)) {
@@ -46,9 +54,9 @@ public class OWLLiteralDeserializer extends StdDeserializer<OWLLiteral> {
                 jsonParser.nextToken();
                 value = jsonParser.readValueAs(String.class);
             }
-            else if("type".equals(fieldname)) {
+            else if("@type".equals(fieldname) || "type".equals(fieldname)) {
                 jsonParser.nextToken();
-                iri = jsonParser.readValueAs(IRI.class);
+                iri = jsonParser.readValueAs(String.class);
             }
             if(fieldname == null) {
                 break;
@@ -61,7 +69,7 @@ public class OWLLiteralDeserializer extends StdDeserializer<OWLLiteral> {
             return dataFactory.getOWLLiteral(value, lang);
         }
         if(iri != null) {
-            return dataFactory.getOWLLiteral(value, dataFactory.getOWLDatatype(iri));
+            return dataFactory.getOWLLiteral(value, dataFactory.getOWLDatatype(IRI.create(iri)));
         }
         return dataFactory.getOWLLiteral(value, "");
     }

@@ -13,7 +13,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-04
  */
-@JsonComponent
+
 public class OWLLiteralSerializer extends StdSerializer<OWLLiteral> {
 
     public OWLLiteralSerializer() {
@@ -28,7 +28,7 @@ public class OWLLiteralSerializer extends StdSerializer<OWLLiteral> {
             gen.writeString(value.getLang());
         }
         else {
-            gen.writeFieldName("type");
+            gen.writeFieldName("@type");
             gen.writeObject(value.getDatatype().getIRI());
         }
         gen.writeFieldName("value");

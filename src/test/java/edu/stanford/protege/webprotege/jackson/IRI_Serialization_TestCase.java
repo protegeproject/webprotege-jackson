@@ -23,11 +23,26 @@ public class IRI_Serialization_TestCase {
     @Test
     void shouldWriteIri() throws IOException {
         var json = tester.write(IRI.create(IRI_STRING));
-        assertThat(json).isEqualToJson("\"" + IRI_STRING + "\"");
+        System.out.println(json.getJson());
+        assertThat(json).extractingJsonPathValue("['@type']").isEqualTo("IRI");
+        assertThat(json).extractingJsonPathValue("value").isEqualTo(IRI_STRING);
     }
+
+//    @Test
+//    void shouldReadIriFromJsonString() throws IOException {
+//        var parsed = tester.parse("\"" + IRI_STRING + "\"");
+//        var parsedIri = parsed.getObject();
+//        assertThat(parsedIri.toString()).isEqualTo(IRI_STRING);
+//    }
+
     @Test
-    void shouldReadIri() throws IOException {
-        var parsed = tester.parse("\"" + IRI_STRING + "\"");
+    void shouldReadIriFromJsonObject() throws IOException {
+        var parsed = tester.parse("""
+                                            {
+                                                "@type" : "IRI",
+                                                "value" : "http://example.org/A"
+                                            }
+                                          """);
         var parsedIri = parsed.getObject();
         assertThat(parsedIri.toString()).isEqualTo(IRI_STRING);
     }

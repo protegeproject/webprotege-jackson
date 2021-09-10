@@ -13,7 +13,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 18 Jun 2018
  */
-@JsonComponent
+
 public class EntityTypeDeserializer extends StdDeserializer<EntityType<?>> {
 
     public EntityTypeDeserializer() {

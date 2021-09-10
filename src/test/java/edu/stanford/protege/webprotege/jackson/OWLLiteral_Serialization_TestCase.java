@@ -43,7 +43,7 @@ public class OWLLiteral_Serialization_TestCase {
         var literal = dataFactory.getOWLLiteral(33);
         var json = tester.write(literal);
         assertThat(json).hasJsonPathValue("value", "33");
-        assertThat(json).hasJsonPathValue("type", "xsd:integer");
+        assertThat(json).hasJsonPathValue("['@type']", "xsd:integer");
     }
 
 

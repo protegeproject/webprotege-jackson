@@ -16,7 +16,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2021-04-06
  */
-@JsonComponent
+
 public class OWLOntologyIDSerializer extends StdSerializer<OWLOntologyID> {
 
     @Inject

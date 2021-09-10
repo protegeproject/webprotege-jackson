@@ -17,7 +17,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Stanford Center for Biomedical Informatics Research
  * 2019-12-04
  */
-@JsonComponent
+
 public class OWLPropertyDeserializer<P extends OWLProperty> extends StdDeserializer<P> {
 
     @Nonnull

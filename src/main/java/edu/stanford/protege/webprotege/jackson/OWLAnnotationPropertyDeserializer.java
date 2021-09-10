@@ -15,7 +15,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2021-08-19
  */
-@JsonComponent
+
 public class OWLAnnotationPropertyDeserializer extends StdDeserializer<OWLAnnotationProperty> {
 
     private final OWLEntityDeserializer<OWLAnnotationProperty> deserializer;
