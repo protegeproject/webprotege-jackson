@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Bean;
 import uk.ac.manchester.cs.owl.owlapi.*;
 
 @SpringBootApplication
-public class WebprotegeOwlApiJacksonApplication {
+public class WebprotegeJacksonApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebprotegeOwlApiJacksonApplication.class, args);
+		SpringApplication.run(WebprotegeJacksonApplication.class, args);
 	}
 
 	@Bean
