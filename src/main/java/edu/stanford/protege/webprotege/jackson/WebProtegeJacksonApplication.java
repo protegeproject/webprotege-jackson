@@ -16,10 +16,10 @@ import org.springframework.context.annotation.Bean;
 import uk.ac.manchester.cs.owl.owlapi.*;
 
 @SpringBootApplication
-public class WebprotegeJacksonApplication {
+public class WebProtegeJacksonApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(WebprotegeJacksonApplication.class, args);
+		SpringApplication.run(WebProtegeJacksonApplication.class, args);
 	}
 
 	@Bean
@@ -48,16 +48,16 @@ public class WebprotegeJacksonApplication {
 //		module.addSerializer(OWLProperty.class, new OWLEntitySerializer());
 		module.addSerializer(new EntityTypeSerializer());
 		module.addDeserializer(EntityType.class, new EntityTypeDeserializer());
-		module.addDeserializer(OWLEntity.class, new OWLEntityDeserializer<>(dataFactory));
+		module.addDeserializer(OWLEntity.class, new OWLEntityDeserializer<OWLEntity>(dataFactory));
 		module.addDeserializer(OWLAnnotationSubject.class, new OWLAnnotationSubjectDeserializer());
-		module.addDeserializer(OWLNamedIndividual.class, new OWLEntityDeserializer<>(dataFactory));
-		module.addDeserializer(OWLProperty.class, new OWLPropertyDeserializer<>(dataFactory));
-		module.addDeserializer(OWLObjectProperty.class, new OWLPropertyDeserializer<>(dataFactory));
-		module.addDeserializer(OWLDataProperty.class, new OWLPropertyDeserializer<>(dataFactory));
-		module.addDeserializer(OWLAnnotationProperty.class, new OWLPropertyDeserializer<>(dataFactory));
-//		module.addDeserializer(OWLDatatype.class, new OWLEntityDeserializer<>(dataFactory));
+		module.addDeserializer(OWLNamedIndividual.class, new OWLEntityDeserializer<OWLNamedIndividual>(dataFactory));
+		module.addDeserializer(OWLProperty.class, new OWLPropertyDeserializer<OWLProperty>(dataFactory));
+		module.addDeserializer(OWLObjectProperty.class, new OWLPropertyDeserializer<OWLObjectProperty>(dataFactory));
+		module.addDeserializer(OWLDataProperty.class, new OWLPropertyDeserializer<OWLDataProperty>(dataFactory));
+		module.addDeserializer(OWLAnnotationProperty.class, new OWLPropertyDeserializer<OWLAnnotationProperty>(dataFactory));
+		module.addDeserializer(OWLDatatype.class, new OWLEntityDeserializer<OWLDatatype>(dataFactory));
 		module.addDeserializer(OWLClass.class, new OWLClassDeserializer(dataFactory));
-		module.addDeserializer(OWLNamedIndividual.class, new OWLNamedIndividualDeserializer(new OWLEntityDeserializer<>(dataFactory)));
+		module.addDeserializer(OWLNamedIndividual.class, new OWLNamedIndividualDeserializer(new OWLEntityDeserializer<OWLNamedIndividual>(dataFactory)));
 //		module.addDeserializer(IRI.class, new IriDeserializer());
 		module.addDeserializer(OWLAnnotationValue.class, new OWLAnnotationValueDeserializer(new OWLLiteralDeserializer(dataFactory),
 																							new IriDeserializer()));

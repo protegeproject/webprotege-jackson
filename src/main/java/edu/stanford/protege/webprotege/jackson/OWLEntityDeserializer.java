@@ -53,34 +53,6 @@ public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<
                     iri = jsonParser.getText();
                 }
             }
-//            System.out.println(token);
-//            System.out.println(jsonParser.currentName());
-//            System.out.println(jsonParser.getCurrentValue());
-//            System.out.println(jsonParser.getValueAsString());
-//            System.out.println(jsonParser.getText());
-//            System.out.println("---------------");
-//            if (JsonToken.END_OBJECT.equals(token)) {
-//                break;
-//            }
-//            if (JsonToken.FIELD_NAME.equals(token)) {
-//                var fieldname = jsonParser.getCurrentName();
-//                jsonParser.nextToken();
-//                System.out.println(fieldname);
-//                if (isTypeField(fieldname)) {
-//                    type = jsonParser.readValueAs(EntityType.class);
-//                }
-//                else if (isIriField(fieldname)) {
-//                    iri = jsonParser.getText();
-//                    System.out.println("   " + iri);
-//                }
-//                else {
-//                    throw new JsonParseException(jsonParser, "Unexpected field " + jsonParser.currentName());
-//                }
-//            }
-//            else {
-//                System.out.println(token);
-//                System.out.println(jsonParser.currentName());
-//            }
 
         }
         if (type != null && iri != null) {

@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import org.semanticweb.owlapi.model.OWLAnnotationValue;
-import org.springframework.boot.jackson.JsonComponent;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
