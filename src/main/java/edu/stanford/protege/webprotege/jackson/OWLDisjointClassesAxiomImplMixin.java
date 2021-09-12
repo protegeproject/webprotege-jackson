@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.jackson;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.*;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 
@@ -18,6 +16,6 @@ public class OWLDisjointClassesAxiomImplMixin {
 
     @JsonCreator
     public OWLDisjointClassesAxiomImplMixin(@JsonProperty("classExpressions") Set<? extends OWLClassExpression> classExpressions,
-                                            @JsonProperty("annotations")Set<? extends OWLAnnotation> annotations) {
+                                            @JsonProperty("annotations") @JsonSetter(nulls = Nulls.AS_EMPTY) Set<? extends OWLAnnotation> annotations) {
     }
 }

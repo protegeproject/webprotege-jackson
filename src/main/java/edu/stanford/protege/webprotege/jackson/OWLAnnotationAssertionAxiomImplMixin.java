@@ -1,8 +1,6 @@
 package edu.stanford.protege.webprotege.jackson;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.*;
 import org.semanticweb.owlapi.model.OWLAnnotation;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAnnotationSubject;
@@ -25,6 +23,6 @@ public class OWLAnnotationAssertionAxiomImplMixin {
             @JsonProperty("subject") OWLAnnotationSubject subject,
             @JsonProperty("property") OWLAnnotationProperty property,
             @JsonProperty("value") OWLAnnotationValue value,
-            @JsonProperty(value = "annotations", defaultValue = "[]") @Nonnull Collection<? extends OWLAnnotation> annotations) {
+            @JsonProperty(value = "annotations", defaultValue = "[]") @JsonSetter(nulls = Nulls.AS_EMPTY) @Nonnull Collection<? extends OWLAnnotation> annotations) {
     }
 }

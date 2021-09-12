@@ -54,8 +54,7 @@ public class OWLAnnotationAssertionAxiom_Serialization_TestCase {
                         "@type" : "AnnotationProperty",
                         "iri" : "http://example.org/p"
                     },
-                    "value" : "http://example.org/B",
-                    "annotations" : []
+                    "value" : "http://example.org/B"
                 }
 """;
         var axiomContent = tester.parse(json);

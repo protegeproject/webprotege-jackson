@@ -58,8 +58,7 @@ public class OWLEquivalentClassesAxiom_Serialization_TestCase {
                           "@type" : "Class",
                           "iri" : "http://example.org/B"
                         }
-                    ],
-                    "annotations" : []
+                    ]
                 }
 """;
         var axiomContent = tester.parse(json);

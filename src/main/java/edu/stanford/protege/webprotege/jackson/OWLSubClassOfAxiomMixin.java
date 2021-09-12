@@ -2,9 +2,11 @@ package edu.stanford.protege.webprotege.jackson;
 
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import org.semanticweb.owlapi.model.OWLAnnotation;
 import uk.ac.manchester.cs.owl.owlapi.OWLSubClassOfAxiomImpl;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Matthew Horridge
@@ -17,4 +19,6 @@ import java.util.Collection;
 @JsonIncludeProperties({"subClass", "superClass", "annotations"})
 public abstract class OWLSubClassOfAxiomMixin {
 
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    public abstract Set<OWLAnnotation> getAnnotations();
 }

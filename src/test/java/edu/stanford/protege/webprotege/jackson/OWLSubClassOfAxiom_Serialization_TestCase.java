@@ -61,8 +61,7 @@ public class OWLSubClassOfAxiom_Serialization_TestCase {
                     "superClass" : {
                         "@type" : "Class",
                         "iri" : "http://example.org/B"
-                    },
-                    "annotations" : []
+                    }
                 }
 """;
         var axiomContent = tester.parse(json);

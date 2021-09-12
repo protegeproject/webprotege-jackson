@@ -50,8 +50,7 @@ public class OWLDeclarationAxiom_Serialization_TestCase {
                     "entity" : {
                         "@type" : "Class",
                         "iri": "http://example.org/A"
-                    },
-                    "annotations" : []
+                    }
                 }
 """;
         var axiomContent = tester.parse(json);
