@@ -63,6 +63,8 @@ public class WebProtegeJacksonApplication {
 																							new IriDeserializer()));
 
 		module.setMixInAnnotation(OWLAnnotationSubject.class, OWLAnnotationSubjectMixin.class);
+		module.setMixInAnnotation(OWLAnnotation.class, OWLAnnotationMixin.class);
+		module.setMixInAnnotation(OWLAnnotationImpl.class, OWLAnnotationImplMixin.class);
 
 
 		module.addSerializer(OWLLiteral.class, new OWLLiteralSerializer());
