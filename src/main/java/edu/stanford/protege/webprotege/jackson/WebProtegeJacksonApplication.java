@@ -55,8 +55,7 @@ public class WebProtegeJacksonApplication {
 		module.addSerializer(OWLLiteral.class, new OWLLiteralSerializer());
 		module.addDeserializer(OWLLiteral.class, new OWLLiteralDeserializer(dataFactory));
 
-		module.addSerializer(OWLOntologyID.class, new OWLOntologyIDSerializer());
-		module.addDeserializer(OWLOntologyID.class, new OWLOntologyIDDeserializer());
+		module.setMixInAnnotation(OWLOntologyID.class, OWLOntologyIDMixin.class);
 
 		module.setMixInAnnotation(NodeID.class, NodeIDMixin.class);
 
