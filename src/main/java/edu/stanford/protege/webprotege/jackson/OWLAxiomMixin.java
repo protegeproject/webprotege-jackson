@@ -25,6 +25,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLSubDataPropertyOfAxiom.class),
         @Type(OWLSubAnnotationPropertyOfAxiom.class),
         @Type(OWLFunctionalObjectPropertyAxiom.class),
+        @Type(OWLFunctionalDataPropertyAxiom.class),
         @Type(OWLInverseFunctionalObjectPropertyAxiom.class),
         @Type(OWLAsymmetricObjectPropertyAxiom.class),
         @Type(OWLSymmetricObjectPropertyAxiom.class),
