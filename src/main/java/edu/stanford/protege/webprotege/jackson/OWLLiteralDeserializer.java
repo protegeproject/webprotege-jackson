@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -41,36 +42,20 @@ public class OWLLiteralDeserializer extends StdDeserializer<OWLLiteral> {
     public OWLLiteral deserialize(JsonParser jsonParser,
                                   DeserializationContext ctxt) throws IOException {
 
-        String value = null;
-        String lang = null;
-        String iri = null;
-        while (jsonParser.nextToken() != JsonToken.END_OBJECT) {
-            String fieldname = jsonParser.getCurrentName();
-            if ("lang".equals(fieldname)) {
-                jsonParser.nextToken();
-                lang = jsonParser.readValueAs(String.class);
-            }
-            else if("value".equals(fieldname)) {
-                jsonParser.nextToken();
-                value = jsonParser.readValueAs(String.class);
-            }
-            else if("@type".equals(fieldname) || "type".equals(fieldname)) {
-                jsonParser.nextToken();
-                iri = jsonParser.readValueAs(String.class);
-            }
-            if(fieldname == null) {
-                break;
-            }
-        }
+        var tree = (ObjectNode) jsonParser.readValueAsTree();
+        var value = tree.get("value");
+        var lang = tree.get("lang");
+        var iri = tree.get("type");
+
         if(value == null) {
             throw new JsonParseException(jsonParser, "value field is missing");
         }
         if(lang != null) {
-            return dataFactory.getOWLLiteral(value, lang);
+            return dataFactory.getOWLLiteral(value.asText(), lang.textValue());
         }
         if(iri != null) {
-            return dataFactory.getOWLLiteral(value, dataFactory.getOWLDatatype(IRI.create(iri)));
+            return dataFactory.getOWLLiteral(value.asText(), dataFactory.getOWLDatatype(IRI.create(iri.textValue())));
         }
-        return dataFactory.getOWLLiteral(value, "");
+        return dataFactory.getOWLLiteral(value.asText(), "");
     }
 }
