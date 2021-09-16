@@ -31,7 +31,8 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLSymmetricObjectPropertyAxiom.class),
         @Type(OWLTransitiveObjectPropertyAxiom.class),
         @Type(OWLIrreflexiveObjectPropertyAxiom.class),
-        @Type(OWLSameIndividualAxiom.class)
+        @Type(OWLSameIndividualAxiom.class),
+        @Type(OWLDifferentIndividualsAxiom.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public interface OWLAxiomMixin {
