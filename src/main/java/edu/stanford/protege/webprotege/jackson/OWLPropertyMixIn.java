@@ -3,20 +3,22 @@ package edu.stanford.protege.webprotege.jackson;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import org.semanticweb.owlapi.model.OWLObjectInverseOf;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import org.semanticweb.owlapi.model.OWLAnnotationProperty;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLObjectPropertyExpression;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
- * 2021-09-02
+ * 2021-09-13
  */
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 @JsonSubTypes({
         @Type(OWLObjectProperty.class),
-        @Type(OWLObjectInverseOf.class)
+        @Type(OWLDataProperty.class),
+        @Type(OWLAnnotationProperty.class)
 })
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
-public class OWLObjectPropertyExpressionMixin {
+public class OWLPropertyMixIn {
 
 }

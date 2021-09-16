@@ -10,7 +10,7 @@ import uk.ac.manchester.cs.owl.owlapi.OWLObjectInverseOfImpl;
  * 2021-09-02
  */
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = OWLObjectInverseOfImpl.class, name = "ObjectInverseOf")
+        @JsonSubTypes.Type(value = OWLObjectInverseOfImpl.class)
 })
 @JsonIncludeProperties("inverseProperty")
 public class OWLObjectInverseOfMixin {

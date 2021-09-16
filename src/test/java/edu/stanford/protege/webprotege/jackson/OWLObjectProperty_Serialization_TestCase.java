@@ -2,9 +2,8 @@ package edu.stanford.protege.webprotege.jackson;
 
 import org.junit.jupiter.api.Test;
 import org.semanticweb.owlapi.model.IRI;
-import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.semanticweb.owlapi.model.OWLDatatype;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
@@ -16,55 +15,55 @@ import static org.assertj.core.api.Assertions.assertThat;
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
- * 2021-09-04
+ * 2021-09-13
  */
 @JsonTest
-public class OWLClass_Serialization_TestCase {
+public class OWLObjectProperty_Serialization_TestCase {
 
     @Autowired
-    private JacksonTester<OWLClass> tester;
+    private JacksonTester<OWLObjectProperty> tester;
 
     @Autowired
     private OWLDataFactory dataFactory;
 
     @Test
-    void shouldSerializeClass() throws IOException {
+    void shouldSerializeObjectProperty() throws IOException {
         var iri = IRI.create("http://example.org/x");
-        var cls = dataFactory.getOWLClass(iri);
-        var written = tester.write(cls);
+        var prop = dataFactory.getOWLObjectProperty(iri);
+        var written = tester.write(prop);
         var json = written.getJson();
         System.out.println(json);
 
-        assertThat(written).extractingJsonPathValue("['@type']").isEqualTo("Class");
+        assertThat(written).extractingJsonPathValue("['@type']").isEqualTo("ObjectProperty");
         assertThat(written).extractingJsonPathValue("iri").isEqualTo(iri.toString());
 
 
         var parsed = tester.parse(json);
-        var parsedCls = parsed.getObject();
-        assertThat(parsedCls).isEqualTo(cls);
+        var parsedProp = parsed.getObject();
+        assertThat(parsedProp).isEqualTo(prop);
     }
 
     @Test
-    void shouldDeserializeClass() throws IOException {
+    void shouldDeserializeObjectProperty() throws IOException {
         var iri = IRI.create("http://example.org/x");
-        var cls = dataFactory.getOWLClass(iri);
+        var prop = dataFactory.getOWLObjectProperty(iri);
         var json = """
-                {"@type" : "Class", "iri" : "http://example.org/x"}
+                {"@type" : "ObjectProperty", "iri" : "http://example.org/x"}
                 """;
         var parsed = tester.parse(json);
-        var parsedCls = parsed.getObject();
-        assertThat(parsedCls).isEqualTo(cls);
+        var parsedProp = parsed.getObject();
+        assertThat(parsedProp).isEqualTo(prop);
     }
 
     @Test
-    void shouldDeserializeClassWithLegacyTypeNames() throws IOException {
+    void shouldDeserializeObjectPropertyWithLegacyTypeNames() throws IOException {
         var iri = IRI.create("http://example.org/x");
-        var cls = dataFactory.getOWLClass(iri);
+        var prop = dataFactory.getOWLObjectProperty(iri);
         var json = """
-                {"type" : "owl:Class", "iri" : "http://example.org/x"}
+                {"type" : "owl:ObjectProperty", "iri" : "http://example.org/x"}
                 """;
         var parsed = tester.parse(json);
-        var parsedCls = parsed.getObject();
-        assertThat(parsedCls).isEqualTo(cls);
+        var parsedProp = parsed.getObject();
+        assertThat(parsedProp).isEqualTo(prop);
     }
 }

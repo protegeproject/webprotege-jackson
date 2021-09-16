@@ -2,6 +2,7 @@ package edu.stanford.protege.webprotege.jackson;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.jsontype.TypeSerializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.springframework.boot.jackson.JsonComponent;
@@ -28,11 +29,19 @@ public class OWLLiteralSerializer extends StdSerializer<OWLLiteral> {
             gen.writeString(value.getLang());
         }
         else {
-            gen.writeFieldName("@type");
+            gen.writeFieldName("type");
             gen.writeObject(value.getDatatype().getIRI());
         }
         gen.writeFieldName("value");
         gen.writeObject(value.getLiteral());
         gen.writeEndObject();
+    }
+
+    @Override
+    public void serializeWithType(OWLLiteral value,
+                                  JsonGenerator gen,
+                                  SerializerProvider serializers,
+                                  TypeSerializer typeSer) throws IOException {
+        this.serialize(value, gen, serializers);
     }
 }

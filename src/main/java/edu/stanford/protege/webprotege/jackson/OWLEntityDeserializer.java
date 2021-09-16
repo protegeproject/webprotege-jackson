@@ -6,6 +6,9 @@ import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.databind.node.ValueNode;
+import com.google.common.collect.ImmutableMap;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -21,14 +24,35 @@ import java.io.IOException;
  */
 public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<E> {
 
+
+    private static ImmutableMap<String, EntityType<?>> buildTypeMap() {
+        var mapBuilder = ImmutableMap.<String, EntityType<?>>builder();
+        for(var entityType : EntityType.values()) {
+            mapBuilder.put(entityType.getName(), entityType);
+            mapBuilder.put(entityType.getPrefixedName(), entityType);
+        }
+        return mapBuilder.build();
+    }
+
     private static final String TYPE_FIELD_LEGACY_NAME = "type";
+
+    private static ImmutableMap<String, EntityType<?>> entityTypeMap = buildTypeMap();
+
 
     @Nonnull
     private final OWLDataFactory dataFactory;
 
+    private final EntityType<?> defaultEntityType;
+
+
     public OWLEntityDeserializer(@Nonnull OWLDataFactory dataFactory) {
+        this(dataFactory, null);
+    }
+
+    public OWLEntityDeserializer(@Nonnull OWLDataFactory dataFactory, EntityType<?> defaultEntityType) {
         super(OWLEntity.class);
         this.dataFactory = dataFactory;
+        this.defaultEntityType = defaultEntityType;
     }
 
     @Override
@@ -37,44 +61,46 @@ public class OWLEntityDeserializer<E extends OWLEntity> extends StdDeserializer<
     }
 
     public E deserialize(JsonParser jsonParser, EntityType<?> entityType) throws IOException {
+        var tree = jsonParser.readValueAsTree();
+
+
+
         EntityType<?> type = entityType;
         String iri = null;
-        while (true) {
-            var token = jsonParser.nextToken();
-            if(JsonToken.END_OBJECT.equals(token)) {
-                break;
-            }
-            if(JsonToken.VALUE_STRING.equals(token)) {
-                if(isTypeField(jsonParser.currentName())) {
-                    type = jsonParser.readValueAs(EntityType.class);
 
-                }
-                else if(isIriField(jsonParser.currentName())) {
-                    iri = jsonParser.getText();
-                }
+        if(tree.isObject()) {
+            var objectNode = (ObjectNode) tree;
+            iri = objectNode.get("iri").asText();
+            var typeValue = objectNode.get("@type");
+            if(typeValue == null) {
+                typeValue = objectNode.get("type");
             }
-
+            if(typeValue != null) {
+                type = entityTypeMap.get(typeValue.textValue());
+            }
+            else {
+                type = defaultEntityType;
+            }
         }
-        if (type != null && iri != null) {
+        else if(tree.isValueNode()) {
+            var valueNode = (ValueNode) tree;
+            iri = valueNode.textValue();
+            type = defaultEntityType;
+        }
+
+        if (iri != null && type != null) {
             return (E) dataFactory.getOWLEntity(type, IRI.create(iri));
         }
         else {
             if (type == null) {
-                throw new JsonParseException(jsonParser, OWLEntitySerializer.TYPE_FIELD_NAME + " field is missing");
+                throw new JsonParseException(jsonParser, "@type field is missing");
             }
             else {
-                throw new JsonParseException(jsonParser, OWLEntitySerializer.IRI_FIELD_NAME + " field is missing");
+                throw new JsonParseException(jsonParser, "iri field is missing");
             }
         }
     }
 
-    private static boolean isIriField(String fieldname) {
-        return OWLEntitySerializer.IRI_FIELD_NAME.equals(fieldname);
-    }
-
-    private static boolean isTypeField(String fieldname) {
-        return OWLEntitySerializer.TYPE_FIELD_NAME.equals(fieldname) || TYPE_FIELD_LEGACY_NAME.equals(fieldname);
-    }
 
     @Override
     public Object deserializeWithType(JsonParser p,

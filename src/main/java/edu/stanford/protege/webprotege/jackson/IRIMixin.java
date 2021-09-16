@@ -13,15 +13,14 @@ import javax.annotation.Nonnull;
  * Stanford Center for Biomedical Informatics Research
  * 2021-09-05
  */
-@JsonTypeName("IRI")
 public abstract class IRIMixin {
 
     @JsonCreator
-    protected IRIMixin(@JsonProperty("value") @Nonnull String s) {
+    protected IRIMixin(@Nonnull String s) {
 
     }
 
-    @JsonProperty("value")
+    @JsonValue
     @Override
     public abstract String toString();
 }

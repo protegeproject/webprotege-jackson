@@ -13,7 +13,7 @@ import java.io.IOException;
  * Stanford Center for Biomedical Informatics Research
  * 2021-09-05
  */
-public class IriDeserializationProblemHandler extends DeserializationProblemHandler {
+public class MissingTypeIdDeserializationProblemHandler extends DeserializationProblemHandler {
 
     public JavaType handleMissingTypeId(DeserializationContext ctxt, JavaType baseType, TypeIdResolver idResolver, String failureMsg) {
         return TypeFactory.defaultInstance().constructType(baseType.getRawClass());

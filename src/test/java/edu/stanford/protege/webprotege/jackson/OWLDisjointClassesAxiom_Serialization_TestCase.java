@@ -61,7 +61,7 @@ public class OWLDisjointClassesAxiom_Serialization_TestCase {
                     ],
                     "annotations" : []
                 }
-""";
+""".stripIndent();
         var axiomContent = tester.parse(json);
         var parsedAxiom = axiomContent.getObject();
         assertThat(parsedAxiom).isEqualTo(axiom);

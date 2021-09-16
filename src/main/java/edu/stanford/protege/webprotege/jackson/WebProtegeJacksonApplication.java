@@ -44,32 +44,17 @@ public class WebProtegeJacksonApplication {
 		mapper.registerModule(new Jdk8Module());
 		mapper.registerModule(new GuavaModule());
 		SimpleModule module = new SimpleModule();
-		module.addSerializer(OWLEntity.class, new OWLEntitySerializer());
-//		module.addSerializer(OWLProperty.class, new OWLEntitySerializer());
+
+
 		module.addSerializer(new EntityTypeSerializer());
 		module.addDeserializer(EntityType.class, new EntityTypeDeserializer());
-		module.addDeserializer(OWLEntity.class, new OWLEntityDeserializer<OWLEntity>(dataFactory));
-		module.addDeserializer(OWLAnnotationSubject.class, new OWLAnnotationSubjectDeserializer());
-		module.addDeserializer(OWLNamedIndividual.class, new OWLEntityDeserializer<OWLNamedIndividual>(dataFactory));
-		module.addDeserializer(OWLProperty.class, new OWLPropertyDeserializer<OWLProperty>(dataFactory));
-		module.addDeserializer(OWLObjectProperty.class, new OWLPropertyDeserializer<OWLObjectProperty>(dataFactory));
-		module.addDeserializer(OWLDataProperty.class, new OWLPropertyDeserializer<OWLDataProperty>(dataFactory));
-		module.addDeserializer(OWLAnnotationProperty.class, new OWLPropertyDeserializer<OWLAnnotationProperty>(dataFactory));
-		module.addDeserializer(OWLDatatype.class, new OWLEntityDeserializer<OWLDatatype>(dataFactory));
-		module.addDeserializer(OWLClass.class, new OWLClassDeserializer(dataFactory));
-		module.addDeserializer(OWLNamedIndividual.class, new OWLNamedIndividualDeserializer(new OWLEntityDeserializer<OWLNamedIndividual>(dataFactory)));
-//		module.addDeserializer(IRI.class, new IriDeserializer());
-		module.addDeserializer(OWLAnnotationValue.class, new OWLAnnotationValueDeserializer(new OWLLiteralDeserializer(dataFactory),
-																							new IriDeserializer()));
 
-		module.setMixInAnnotation(OWLAnnotationSubject.class, OWLAnnotationSubjectMixin.class);
 		module.setMixInAnnotation(OWLAnnotation.class, OWLAnnotationMixin.class);
 		module.setMixInAnnotation(OWLAnnotationImpl.class, OWLAnnotationImplMixin.class);
 
-
 		module.addSerializer(OWLLiteral.class, new OWLLiteralSerializer());
 		module.addDeserializer(OWLLiteral.class, new OWLLiteralDeserializer(dataFactory));
-		module.addSerializer(IRI.class, new IriSerializer());
+
 		module.addSerializer(OWLOntologyID.class, new OWLOntologyIDSerializer());
 		module.addDeserializer(OWLOntologyID.class, new OWLOntologyIDDeserializer());
 
@@ -79,9 +64,6 @@ public class WebProtegeJacksonApplication {
 		module.addSerializer(AxiomType.class, new AxiomTypeSerializer());
 		module.addDeserializer(AxiomType.class, new AxiomTypeDeserializer());
 
-//		module.addSerializer(OWLAxiom.class, new OWLAxiomSerializer());
-//		module.addDeserializer(OWLAxiom.class, new OWLAxiomDeserializer(dataFactory));
-//
 		module.setMixInAnnotation(OWLAxiom.class, OWLAxiomMixin.class);
 
 		module.setMixInAnnotation(OWLSubClassOfAxiom.class, OWLSubClassOfAxiomMixin.class);
@@ -102,27 +84,39 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLDeclarationAxiom.class, OWLDeclarationAxiomMixin.class);
 		module.setMixInAnnotation(OWLDeclarationAxiomImpl.class, OWLDeclarationAxiomImplMixin.class);
 
-//		module.setMixInAnnotation(OWLEntity.class, OWLEntityMixin.class);
-//
+		module.setMixInAnnotation(OWLObjectPropertyAssertionAxiom.class, OWLObjectPropertyAssertionAxiomMixin.class);
+		module.setMixInAnnotation(OWLObjectPropertyAssertionAxiomImpl.class, OWLObjectPropertyAssertionAxiomImplMixin.class);
+
+		module.setMixInAnnotation(OWLObjectPropertyExpression.class, OWLObjectPropertyExpressionMixin.class);
+		module.setMixInAnnotation(OWLObjectInverseOf.class, OWLObjectInverseOfMixin.class);
+		module.setMixInAnnotation(OWLObjectInverseOfImpl.class, OWLObjectInverseOfMixinImpl.class);
+
+		module.setMixInAnnotation(OWLEntity.class, OWLEntityMixin.class);
+		// We need this to support legacy representation of entities that use "type" instead of "@type"
+		// for the field name that identifies the type id
+		module.addDeserializer(OWLEntity.class, new OWLEntityDeserializer<>(dataFactory));
+
 		module.setMixInAnnotation(OWLClass.class, OWLClassMixin.class);
-//		module.setMixInAnnotation(OWLClassImpl.class, OWLClassImplMixin.class);
-//
+		module.addDeserializer(OWLClassImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.CLASS));
+
 		module.setMixInAnnotation(OWLDatatype.class, OWLDatatypeMixin.class);
-		module.setMixInAnnotation(OWLDatatypeImpl.class, OWLDatatypeImplMixin.class);
-//
+		module.addDeserializer(OWLDatatypeImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.DATATYPE));
+
+		module.setMixInAnnotation(OWLProperty.class, OWLPropertyMixIn.class);
+
 		module.setMixInAnnotation(OWLObjectProperty.class, OWLObjectPropertyMixin.class);
-		module.setMixInAnnotation(OWLObjectPropertyImpl.class, OWLObjectPropertyImplMixin.class);
-//
+		module.addDeserializer(OWLObjectPropertyImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.OBJECT_PROPERTY));
+
 		module.setMixInAnnotation(OWLDataProperty.class, OWLDataPropertyMixin.class);
-		module.setMixInAnnotation(OWLDataPropertyImpl.class, OWLDataPropertyImplMixin.class);
+		module.addDeserializer(OWLDataPropertyImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.DATA_PROPERTY));
 //
 		module.setMixInAnnotation(OWLAnnotationProperty.class, OWLAnnotationPropertyMixin.class);
-		module.setMixInAnnotation(OWLAnnotationPropertyImpl.class, OWLAnnotationPropertyImplMixin.class);
-//
-		module.setMixInAnnotation(OWLNamedIndividual.class, OWLNamedIndividualMixin.class);
-//		module.setMixInAnnotation(OWLNamedIndividualImpl.class, OWLNamedIndividualImplMixin.class);
+		module.addDeserializer(OWLAnnotationPropertyImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.ANNOTATION_PROPERTY));
 
 		module.setMixInAnnotation(OWLIndividual.class, OWLIndividualMixin.class);
+
+		module.setMixInAnnotation(OWLNamedIndividual.class, OWLNamedIndividualMixin.class);
+		module.addDeserializer(OWLNamedIndividualImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.NAMED_INDIVIDUAL));
 
 		module.setMixInAnnotation(OWLAnonymousIndividual.class, OWLAnonymousIndividualMixin.class);
 		module.setMixInAnnotation(OWLAnonymousIndividualImpl.class, OWLAnonymousIndividualImplMixin.class);
@@ -132,9 +126,11 @@ public class WebProtegeJacksonApplication {
 
 		module.setMixInAnnotation(OWLClassExpression.class, OWLClassExpressionMixin.class);
 
+		module.setMixInAnnotation(OWLLiteral.class, OWLLiteralMixin.class);
+
 		module.setMixInAnnotation(IRI.class, IRIMixin.class);
 
-		mapper.addHandler(new IriDeserializationProblemHandler());
+		mapper.addHandler(new MissingTypeIdDeserializationProblemHandler());
 
 
 		mapper.registerModule(module);

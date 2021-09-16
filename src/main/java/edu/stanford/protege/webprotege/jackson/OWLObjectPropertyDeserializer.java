@@ -7,34 +7,35 @@ import com.fasterxml.jackson.databind.jsontype.TypeDeserializer;
 import org.semanticweb.owlapi.model.EntityType;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
-import org.springframework.boot.jackson.JsonComponent;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.io.IOException;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
- * 18 Jun 2018
+ * 2021-09-13
  */
+public class OWLObjectPropertyDeserializer extends StdDeserializer<OWLObjectPropertyImpl> {
 
-public class OWLClassDeserializer extends StdDeserializer<OWLClass> {
 
-    private final OWLEntityDeserializer<OWLClass> deserializer;
+    private final OWLEntityDeserializer<OWLObjectProperty> deserializer;
 
-    public OWLClassDeserializer(OWLDataFactory dataFactory) {
-        super(OWLClass.class);
+    public OWLObjectPropertyDeserializer(OWLDataFactory dataFactory) {
+        super(OWLObjectPropertyImpl.class);
         deserializer = new OWLEntityDeserializer<>(dataFactory);
     }
 
     @Override
-    public OWLClass deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
-        return deserializer.deserialize(jsonParser, EntityType.CLASS);
+    public OWLObjectPropertyImpl deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
+        return (OWLObjectPropertyImpl) deserializer.deserialize(jsonParser, EntityType.OBJECT_PROPERTY);
     }
 
     @Override
     public Object deserializeWithType(JsonParser jsonParser,
                                       DeserializationContext ctxt,
                                       TypeDeserializer typeDeserializer) throws IOException {
-        return deserializer.deserialize(jsonParser, EntityType.CLASS);
+        return deserializer.deserialize(jsonParser, EntityType.OBJECT_PROPERTY);
     }
 }

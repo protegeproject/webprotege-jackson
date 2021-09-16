@@ -3,6 +3,10 @@ package edu.stanford.protege.webprotege.jackson;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.semanticweb.owlapi.model.IRI;
 import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyImpl;
 
 /**
@@ -10,10 +14,9 @@ import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyImpl;
  * Stanford Center for Biomedical Informatics Research
  * 2021-09-02
  */
-@JsonSubTypes({
-        @Type(OWLDataPropertyImpl.class)
-})
 @JsonIncludeProperties("iri")
-public class OWLDataPropertyMixin {
+@JsonDeserialize(as = OWLDataPropertyImpl.class)
+@JsonTypeName("DataProperty")
+public abstract class OWLDataPropertyMixin {
 
 }

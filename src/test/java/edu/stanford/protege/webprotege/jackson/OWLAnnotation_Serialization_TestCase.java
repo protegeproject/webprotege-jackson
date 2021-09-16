@@ -36,7 +36,7 @@ public class OWLAnnotation_Serialization_TestCase {
         var json = written.getJson();
         System.out.println(json);
         assertThat(written).extractingJsonPathValue("property").isEqualTo("http://example.org/p");
-        assertThat(written).extractingJsonPathValue("value").isEqualTo(value.toString());
+        assertThat(written).extractingJsonPathValue("value.iri").isEqualTo(value.toString());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class OWLAnnotation_Serialization_TestCase {
         var property = dataFactory.getOWLAnnotationProperty(IRI.create("http://example.org/p"));
         var annotation = dataFactory.getOWLAnnotation(property, value);
         var json = """
-                {"property" : "http://example.org/p", "value" : "http://example.org/x"}
+                {"property" : {"@type":"AnnotationProperty","iri":"http://example.org/p"}, "value" : {"iri":"http://example.org/x"}}
                 """;
         var parsed = tester.parse(json);
         var parsedObject = parsed.getObject();

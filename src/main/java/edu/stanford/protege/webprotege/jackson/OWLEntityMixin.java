@@ -19,12 +19,9 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLAnnotationProperty.class),
         @Type(OWLNamedIndividual.class)
 })
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
+@JsonIncludeProperties("iri")
 public abstract class OWLEntityMixin {
-
-    @JsonProperty("@type")
-    @JsonAlias("type")
-    public abstract EntityType<?> getEntityType();
 
     @JsonProperty("iri")
     public abstract IRI getIRI();

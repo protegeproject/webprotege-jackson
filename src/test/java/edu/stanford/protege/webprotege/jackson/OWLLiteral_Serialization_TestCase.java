@@ -23,9 +23,6 @@ public class OWLLiteral_Serialization_TestCase {
     @Autowired
     private JacksonTester<OWLLiteral> tester;
 
-    @Autowired
-    private JacksonTester<OWLAnnotationValue> annotationValueTester;
-
     @BeforeEach
     public void setUp() throws Exception {
     }
@@ -42,8 +39,9 @@ public class OWLLiteral_Serialization_TestCase {
     public void shouldWrite_OWLLiteral_with_Datatype() throws IOException {
         var literal = dataFactory.getOWLLiteral(33);
         var json = tester.write(literal);
+        System.out.println(json.getJson());
         assertThat(json).hasJsonPathValue("value", "33");
-        assertThat(json).hasJsonPathValue("['@type']", "xsd:integer");
+        assertThat(json).hasJsonPathValue("['type']", "xsd:integer");
     }
 
 
@@ -56,18 +54,6 @@ public class OWLLiteral_Serialization_TestCase {
                 }
                 """;
         var parsed = tester.parse(json);
-        assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLLiteral(33));
-    }
-
-    @Test
-    public void shouldRead_OWLLiteral_with_Datatype_Against_OWLAnnotationValue() throws IOException {
-        var json = """
-                {
-                    "value" : 33,
-                    "type"  : "http://www.w3.org/2001/XMLSchema#integer"
-                }
-                """;
-        var parsed = annotationValueTester.parse(json);
         assertThat(parsed.getObject()).isEqualTo(dataFactory.getOWLLiteral(33));
     }
 
@@ -90,17 +76,5 @@ public class OWLLiteral_Serialization_TestCase {
         var literal = dataFactory.getOWLLiteral("Hello", "");
         assertThat(read.getObject()).isEqualTo(literal);
 
-    }
-
-    @Test
-    public void shouldRoundTrip_OWLLiteral_with_LangTag_Against_OWLAnnotationValue() throws IOException {
-        var json = """
-                {
-                    "value" : "Hello"
-                }
-                """;
-        var read = annotationValueTester.parse(json);
-        var literal = dataFactory.getOWLLiteral("Hello", "");
-        assertThat(read.getObject()).isEqualTo(literal);
     }
 }
