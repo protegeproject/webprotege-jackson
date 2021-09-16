@@ -20,7 +20,8 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLClassAssertionAxiom.class),
         @Type(OWLAnnotationAssertionAxiom.class),
         @Type(OWLObjectPropertyAssertionAxiom.class),
-        @Type(OWLDataPropertyAssertionAxiom.class)
+        @Type(OWLDataPropertyAssertionAxiom.class),
+        @Type(OWLSubObjectPropertyOfAxiom.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public interface OWLAxiomMixin {
