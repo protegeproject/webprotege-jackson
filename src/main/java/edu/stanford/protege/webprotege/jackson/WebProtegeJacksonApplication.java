@@ -113,6 +113,9 @@ public class WebProtegeJacksonApplication {
 
 		module.setMixInAnnotation(OWLTransitiveObjectPropertyAxiom.class, OWLTransitiveObjectPropertyAxiomMixin.class);
 		module.setMixInAnnotation(OWLTransitiveObjectPropertyAxiomImpl.class, OWLTransitiveObjectPropertyAxiomImplMixin.class);
+	
+		module.setMixInAnnotation(OWLIrreflexiveObjectPropertyAxiom.class, OWLIrreflexiveObjectPropertyAxiomMixin.class);
+		module.setMixInAnnotation(OWLIrreflexiveObjectPropertyAxiomImpl.class, OWLIrreflexiveObjectPropertyAxiomImplMixin.class);
 
 		module.setMixInAnnotation(OWLDataPropertyExpression.class, OWLDataPropertyExpressionMixin.class);
 
