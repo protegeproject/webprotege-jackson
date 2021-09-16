@@ -138,12 +138,17 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLObjectPropertyDomainAxiom.class, OWLObjectPropertyDomainAxiomMixin.class);
 		module.setMixInAnnotation(OWLObjectPropertyDomainAxiomImpl.class, OWLObjectPropertyDomainAxiomImplMixin.class);
 
+		module.setMixInAnnotation(OWLDataPropertyRangeAxiom.class, OWLDataPropertyRangeAxiomMixin.class);
+		module.setMixInAnnotation(OWLDataPropertyRangeAxiomImpl.class, OWLDataPropertyRangeAxiomImplMixin.class);
+
 
 		module.setMixInAnnotation(OWLDataPropertyExpression.class, OWLDataPropertyExpressionMixin.class);
 
 		module.setMixInAnnotation(OWLObjectPropertyExpression.class, OWLObjectPropertyExpressionMixin.class);
 		module.setMixInAnnotation(OWLObjectInverseOf.class, OWLObjectInverseOfMixin.class);
 		module.setMixInAnnotation(OWLObjectInverseOfImpl.class, OWLObjectInverseOfMixinImpl.class);
+
+		module.setMixInAnnotation(OWLDataRange.class, OWLDataRangeMixin.class);
 
 		module.setMixInAnnotation(OWLEntity.class, OWLEntityMixin.class);
 		// We need this to support legacy representation of entities that use "type" instead of "@type"
