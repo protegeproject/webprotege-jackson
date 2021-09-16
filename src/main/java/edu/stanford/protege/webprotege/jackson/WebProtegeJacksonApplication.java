@@ -95,6 +95,9 @@ public class WebProtegeJacksonApplication {
 		
 		module.setMixInAnnotation(OWLSubDataPropertyOfAxiom.class, OWLSubDataPropertyOfAxiomMixin.class);
 		module.setMixInAnnotation(OWLSubDataPropertyOfAxiomImpl.class, OWLSubDataPropertyOfAxiomImplMixin.class);
+				
+		module.setMixInAnnotation(OWLSubAnnotationPropertyOfAxiom.class, OWLSubAnnotationPropertyOfAxiomMixin.class);
+		module.setMixInAnnotation(OWLSubAnnotationPropertyOfAxiomImpl.class, OWLSubAnnotationPropertyOfAxiomImplMixin.class);
 		
 		module.setMixInAnnotation(OWLDataPropertyExpression.class, OWLDataPropertyExpressionMixin.class);
 
