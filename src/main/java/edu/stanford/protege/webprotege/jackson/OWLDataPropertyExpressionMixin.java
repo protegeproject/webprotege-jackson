@@ -1,14 +1,19 @@
 package edu.stanford.protege.webprotege.jackson;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import uk.ac.manchester.cs.owl.owlapi.OWLDataPropertyImpl;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import org.semanticweb.owlapi.model.OWLDataProperty;
 
 /**
  * Matthew Horridge
  * Stanford Center for Biomedical Informatics Research
  * 2021-09-16
  */
-@JsonDeserialize(as = OWLDataPropertyImpl.class)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes({
+        @Type(OWLDataProperty.class)
+})
 public class OWLDataPropertyExpressionMixin {
 
 }
