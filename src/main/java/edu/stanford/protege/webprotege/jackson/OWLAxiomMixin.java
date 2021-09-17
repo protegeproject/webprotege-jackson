@@ -39,7 +39,8 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLObjectPropertyDomainAxiom.class),
         @Type(OWLDataPropertyRangeAxiom.class),
         @Type(OWLDataPropertyDomainAxiom.class),
-        @Type(OWLAnnotationPropertyDomainAxiom.class)
+        @Type(OWLAnnotationPropertyDomainAxiom.class),
+        @Type(OWLAnnotationPropertyRangeAxiom.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public interface OWLAxiomMixin {
