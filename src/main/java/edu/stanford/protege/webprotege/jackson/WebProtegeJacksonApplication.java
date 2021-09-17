@@ -74,6 +74,11 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLDisjointClassesAxiom.class, OWLDisjointClassesAxiomMixin.class);
 		module.setMixInAnnotation(OWLDisjointClassesAxiomImpl.class, OWLDisjointClassesAxiomImplMixin.class);
 
+		module.setMixInAnnotation(OWLDisjointUnionAxiom.class, OWLDisjointUnionAxiomMixin.class);
+		module.setMixInAnnotation(OWLDisjointUnionAxiomImpl.class, OWLDisjointUnionAxiomImplMixin.class);
+
+		
+		
 		module.setMixInAnnotation(OWLAnnotationAssertionAxiom.class, OWLAnnotationAssertionAxiomMixin.class);
 		module.setMixInAnnotation(OWLAnnotationAssertionAxiomImpl.class, OWLAnnotationAssertionAxiomImplMixin.class);
 

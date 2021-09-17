@@ -15,6 +15,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLSubClassOfAxiom.class),
         @Type(OWLEquivalentClassesAxiom.class),
         @Type(OWLDisjointClassesAxiom.class),
+        @Type(OWLDisjointUnionAxiom.class),
         @Type(OWLHasKeyAxiom.class),
         @Type(OWLDeclarationAxiom.class),
         @Type(OWLClassAssertionAxiom.class),
