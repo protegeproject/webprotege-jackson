@@ -64,7 +64,7 @@ public class OWLDataAllValuesFrom_Serialization_TestCase {
                     },
                     "filler" : {
                         "@type" : "Datatype",
-                        "value" : "http://example.org/D"
+                        "iri" : "http://example.org/D"
                     }
                 }
 """;
