@@ -234,6 +234,9 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLDataHasValue.class, OWLDataHasValueMixin.class);
 		module.setMixInAnnotation(OWLDataHasValueImpl.class, OWLDataHasValueImplMixin.class);
 		
+		module.setMixInAnnotation(OWLDataMaxCardinality.class, OWLDataMaxCardinalityMixin.class);
+		module.setMixInAnnotation(OWLDataMaxCardinalityImpl.class, OWLDataMaxCardinalityImplMixin.class);
+		
 		module.setMixInAnnotation(OWLDataExactCardinality.class, OWLDataExactCardinalityMixin.class);
 		module.setMixInAnnotation(OWLDataExactCardinalityImpl.class, OWLDataExactCardinalityImplMixin.class);
 		

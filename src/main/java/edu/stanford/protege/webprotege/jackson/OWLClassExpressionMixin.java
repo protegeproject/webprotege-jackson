@@ -21,6 +21,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLObjectHasSelf.class),
         @Type(OWLDataAllValuesFrom.class),
         @Type(OWLDataHasValue.class),
+        @Type(OWLDataMaxCardinality.class),
         @Type(OWLDataExactCardinality.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
