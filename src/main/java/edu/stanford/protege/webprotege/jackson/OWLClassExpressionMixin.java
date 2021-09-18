@@ -19,7 +19,8 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLObjectExactCardinality.class),
         @Type(OWLObjectHasValue.class),
         @Type(OWLObjectHasSelf.class),
-        @Type(OWLDataAllValuesFrom.class)
+        @Type(OWLDataAllValuesFrom.class),
+        @Type(OWLDataExactCardinality.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
 public interface OWLClassExpressionMixin {
