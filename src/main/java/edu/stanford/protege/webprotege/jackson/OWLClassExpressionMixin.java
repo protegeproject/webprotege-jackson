@@ -20,6 +20,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLObjectHasValue.class),
         @Type(OWLObjectHasSelf.class),
         @Type(OWLDataAllValuesFrom.class),
+        @Type(OWLDataHasValue.class),
         @Type(OWLDataExactCardinality.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, visible = true)
