@@ -218,11 +218,17 @@ public class WebProtegeJacksonApplication {
 
 		module.setMixInAnnotation(OWLClassExpression.class, OWLClassExpressionMixin.class);
 
+		module.setMixInAnnotation(OWLObjectSomeValuesFrom.class, OWLObjectSomeValuesFromMixin.class);
+		module.setMixInAnnotation(OWLObjectSomeValuesFromImpl.class, OWLObjectSomeValuesFromImplMixin.class);
+
+
+
 		module.setMixInAnnotation(OWLLiteral.class, OWLLiteralMixin.class);
 
 		module.setMixInAnnotation(IRI.class, IRIMixin.class);
 
 		mapper.addHandler(new MissingTypeIdDeserializationProblemHandler());
+
 
 
 		mapper.registerModule(module);
