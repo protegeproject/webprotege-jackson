@@ -224,10 +224,16 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLObjectAllValuesFrom.class, OWLObjectAllValuesFromMixin.class);
 		module.setMixInAnnotation(OWLObjectAllValuesFromImpl.class, OWLObjectAllValuesFromImplMixin.class);
 
+		module.setMixInAnnotation(OWLObjectMinCardinality.class, OWLObjectMinCardinalityMixin.class);
+		module.setMixInAnnotation(OWLObjectMinCardinalityImpl.class, OWLObjectMinCardinalityImplMixin.class);
+		
 		module.setMixInAnnotation(OWLObjectHasValue.class, OWLObjectHasValueMixin.class);
 		module.setMixInAnnotation(OWLObjectHasValueImpl.class, OWLObjectHasValueImplMixin.class);
 
 
+		module.setMixInAnnotation(OWLDataSomeValuesFrom.class, OWLDataSomeValuesFromMixin.class);
+		module.setMixInAnnotation(OWLDataSomeValuesFromImpl.class, OWLDataSomeValuesFromImplMixin.class);
+				
 		module.setMixInAnnotation(OWLDataAllValuesFrom.class, OWLDataAllValuesFromMixin.class);
 		module.setMixInAnnotation(OWLDataAllValuesFromImpl.class, OWLDataAllValuesFromImplMixin.class);
 				

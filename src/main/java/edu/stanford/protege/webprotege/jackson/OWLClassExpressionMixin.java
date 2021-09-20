@@ -19,6 +19,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLObjectExactCardinality.class),
         @Type(OWLObjectHasValue.class),
         @Type(OWLObjectHasSelf.class),
+        @Type(OWLDataSomeValuesFrom.class),
         @Type(OWLDataAllValuesFrom.class),
         @Type(OWLDataHasValue.class),
         @Type(OWLDataMinCardinality.class),
