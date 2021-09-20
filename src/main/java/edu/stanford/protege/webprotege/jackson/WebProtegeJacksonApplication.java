@@ -261,6 +261,9 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLObjectHasSelf.class, OWLObjectHasSelfMixin.class);
 		module.setMixInAnnotation(OWLObjectHasSelfImpl.class, OWLObjectHasSelfImplMixin.class);
 
+		module.setMixInAnnotation(OWLObjectIntersectionOf.class, OWLObjectIntersectionOfMixin.class);
+		module.setMixInAnnotation(OWLObjectIntersectionOfImpl.class, OWLObjectIntersectionOfImplMixin.class);
+
 		module.setMixInAnnotation(OWLLiteral.class, OWLLiteralMixin.class);
 
 		module.setMixInAnnotation(IRI.class, IRIMixin.class);
