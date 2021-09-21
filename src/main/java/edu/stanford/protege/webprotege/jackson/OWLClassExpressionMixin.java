@@ -22,6 +22,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLObjectIntersectionOf.class),
         @Type(OWLObjectUnionOf.class),
         @Type(OWLObjectComplementOf.class),
+        @Type(OWLObjectOneOf.class),
         @Type(OWLDataSomeValuesFrom.class),
         @Type(OWLDataAllValuesFrom.class),
         @Type(OWLDataHasValue.class),
