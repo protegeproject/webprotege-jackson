@@ -51,12 +51,12 @@ public class OWLInverseObjectPropertiesAxiom_Serialization_TestCase {
         var json = """
                 {
                     "@type" : "InverseObjectProperties",
-                    "property" :
+                    "firstProperty" :
                          {
                           "@type" : "ObjectProperty",
                           "iri": "http://example.org/p"
                         },
-                    "inverseProperty" : {
+                    "secondProperty" : {
                           "@type" : "ObjectProperty",
                           "iri" : "http://example.org/q"
                         }
