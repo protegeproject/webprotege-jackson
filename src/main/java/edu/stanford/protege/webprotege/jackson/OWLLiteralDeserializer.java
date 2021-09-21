@@ -45,7 +45,11 @@ public class OWLLiteralDeserializer extends StdDeserializer<OWLLiteral> {
         var tree = (ObjectNode) jsonParser.readValueAsTree();
         var value = tree.get("value");
         var lang = tree.get("lang");
-        var iri = tree.get("type");
+        var iri = tree.get("datatype");
+        if(iri == null) {
+            // Fallback to legacy property name
+            iri = tree.get("type");
+        }
 
         if(value == null) {
             throw new JsonParseException(jsonParser, "value field is missing");

@@ -29,7 +29,7 @@ public class OWLLiteralSerializer extends StdSerializer<OWLLiteral> {
             gen.writeString(value.getLang());
         }
         else {
-            gen.writeFieldName("type");
+            gen.writeFieldName("datatype");
             gen.writeObject(value.getDatatype().getIRI());
         }
         gen.writeFieldName("value");

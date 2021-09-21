@@ -41,7 +41,7 @@ public class OWLLiteral_Serialization_TestCase {
         var json = tester.write(literal);
         System.out.println(json.getJson());
         assertThat(json).hasJsonPathValue("value", "33");
-        assertThat(json).hasJsonPathValue("['type']", "xsd:integer");
+        assertThat(json).hasJsonPathValue("datatype", "xsd:integer");
     }
 
 
@@ -50,7 +50,7 @@ public class OWLLiteral_Serialization_TestCase {
         var json = """
                 {
                     "value" : 33,
-                    "type"  : "http://www.w3.org/2001/XMLSchema#integer"
+                    "datatype"  : "http://www.w3.org/2001/XMLSchema#integer"
                 }
                 """;
         var parsed = tester.parse(json);

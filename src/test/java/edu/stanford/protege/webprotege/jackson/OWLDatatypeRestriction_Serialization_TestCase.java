@@ -49,7 +49,7 @@ public class OWLDatatypeRestriction_Serialization_TestCase {
         assertThat(json).extractingJsonPathStringValue("$.['@type']").isEqualTo("DatatypeRestriction");
 
         assertThat(json).extractingJsonPathStringValue("$.facetRestrictions[0].facet").isEqualTo("http://www.w3.org/2001/XMLSchema#minInclusive");
-        assertThat(json).extractingJsonPathStringValue("$.facetRestrictions[0].value.type").isEqualTo("http://www.w3.org/2001/XMLSchema#integer");
+        assertThat(json).extractingJsonPathStringValue("$.facetRestrictions[0].value.datatype").isEqualTo("http://www.w3.org/2001/XMLSchema#integer");
         assertThat(json).extractingJsonPathStringValue("$.facetRestrictions[0].value.value").isEqualTo("33");
     }
 
