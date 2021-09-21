@@ -16,7 +16,7 @@ import org.semanticweb.owlapi.model.*;
         @Type(OWLDataUnionOf.class),
         @Type(OWLDataComplementOf.class),
         @Type(OWLDataOneOf.class),
-        @Type(OWLDataRestriction.class)
+        @Type(OWLDatatypeRestriction.class)
 })
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
 public class OWLDataRangeMixin {

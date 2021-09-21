@@ -9,6 +9,7 @@ import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.vocab.OWLFacet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -284,6 +285,12 @@ public class WebProtegeJacksonApplication {
 
 		module.setMixInAnnotation(OWLDataOneOf.class, OWLDataOneOfMixin.class);
 		module.setMixInAnnotation(OWLDataOneOfImpl.class, OWLDataOneOfImplMixin.class);
+
+		module.setMixInAnnotation(OWLDatatypeRestriction.class, OWLDatatypeRestrictionMixin.class);
+		module.setMixInAnnotation(OWLDatatypeRestrictionImpl.class, OWLDatatypeRestrictionImplMixin.class);
+
+		module.setMixInAnnotation(OWLFacetRestriction.class, OWLFacetRestrictionMixin.class);
+		module.setMixInAnnotation(OWLFacetRestrictionImpl.class, OWLFacetRestrictionImplMixin.class);
 
 
 		module.setMixInAnnotation(OWLLiteral.class, OWLLiteralMixin.class);
