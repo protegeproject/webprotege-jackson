@@ -30,11 +30,6 @@ public class WebProtegeJacksonApplication {
 	}
 
 	@Bean
-	GuavaModule guavaModule() {
-		return new GuavaModule();
-	}
-
-	@Bean
 	public ObjectMapper objectMapper(OWLDataFactory dataFactory) {
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
