@@ -18,19 +18,23 @@ public class OWLAnnotationValueSerializationConverter extends StdConverter<OWLAn
             @Nonnull
             @Override
             public OWLAnnotationValueProxy visit(@Nonnull IRI iri) {
-                return new OWLAnnotationValueProxy(iri.toString(), null, null);
+                return new OWLAnnotationValueProxy(iri.toString(), null, null, null, null);
             }
 
             @Nonnull
             @Override
             public OWLAnnotationValueProxy visit(@Nonnull OWLAnonymousIndividual individual) {
-                return new OWLAnnotationValueProxy(null, individual.getID().getID(), null);
+                return new OWLAnnotationValueProxy(null, individual.getID().getID(), null, null, null);
             }
 
             @Nonnull
             @Override
             public OWLAnnotationValueProxy visit(@Nonnull OWLLiteral literal) {
-                return new OWLAnnotationValueProxy(null, null, literal);
+                String datatypeString = null;
+                if(!literal.isRDFPlainLiteral()) {
+                    datatypeString = literal.getDatatype().getIRI().toString();
+                }
+                return new OWLAnnotationValueProxy(null, null, literal.getLiteral(), literal.getLang(), datatypeString);
             }
         });
     }

@@ -26,7 +26,7 @@ public abstract class OWLAnnotationAssertionAxiomMixin {
 
     @JsonSerialize(converter = OWLAnnotationValueSerializationConverter.class)
     @JsonDeserialize(converter = OWLAnnotationValueDeserializationConverter.class)
-    public abstract OWLAnnotationSubject getValue();
+    public abstract OWLAnnotationValue getValue();
 
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     public abstract Set<OWLAnnotation> getAnnotations();

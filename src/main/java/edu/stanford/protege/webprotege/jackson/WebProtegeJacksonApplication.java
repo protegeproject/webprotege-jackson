@@ -191,6 +191,7 @@ public class WebProtegeJacksonApplication {
 		module.addDeserializer(OWLDatatypeImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.DATATYPE));
 
 		module.setMixInAnnotation(OWLProperty.class, OWLPropertyMixIn.class);
+		module.addDeserializer(OWLProperty.class, new OWLEntityDeserializer<>(dataFactory));
 
 		module.setMixInAnnotation(OWLObjectProperty.class, OWLObjectPropertyMixin.class);
 		module.addDeserializer(OWLObjectPropertyImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.OBJECT_PROPERTY));
@@ -287,12 +288,12 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLFacetRestriction.class, OWLFacetRestrictionMixin.class);
 		module.setMixInAnnotation(OWLFacetRestrictionImpl.class, OWLFacetRestrictionImplMixin.class);
 
-
 		module.setMixInAnnotation(OWLLiteral.class, OWLLiteralMixin.class);
 
 		module.setMixInAnnotation(IRI.class, IRIMixin.class);
 
 		mapper.addHandler(new MissingTypeIdDeserializationProblemHandler());
+
 
 
 

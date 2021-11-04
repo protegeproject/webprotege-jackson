@@ -25,25 +25,39 @@ public class OWLAnnotationAssertionAxiom_Serialization_TestCase {
     @Autowired
     private OWLDataFactory dataFactory;
 
-    private OWLAnnotationAssertionAxiom axiom;
+    private OWLAnnotationAssertionAxiom axiomWithLiteralValue;
+
+    private OWLAnnotationAssertionAxiom axiomWithIriValue;
+
+    private OWLAnnotationAssertionAxiom axiomWithAnonymousIndividualValue;
 
     @BeforeEach
     void setUp() {
-        axiom = dataFactory.getOWLAnnotationAssertionAxiom(
+        axiomWithLiteralValue = dataFactory.getOWLAnnotationAssertionAxiom(
+                dataFactory.getOWLAnnotationProperty(IRI.create("http://example.org/p")),
+                IRI.create("http://example.org/A"),
+                dataFactory.getOWLLiteral("Hello", "en")
+        );
+        axiomWithIriValue = dataFactory.getOWLAnnotationAssertionAxiom(
                 dataFactory.getOWLAnnotationProperty(IRI.create("http://example.org/p")),
                 IRI.create("http://example.org/A"),
                 IRI.create("http://example.org/B")
+        );
+        axiomWithAnonymousIndividualValue = dataFactory.getOWLAnnotationAssertionAxiom(
+                dataFactory.getOWLAnnotationProperty(IRI.create("http://example.org/p")),
+                IRI.create("http://example.org/A"),
+                dataFactory.getOWLAnonymousIndividual("B2")
         );
     }
 
     @Test
     void shouldSerializeAxiom() throws IOException {
-        var json = tester.write(axiom);
+        var json = tester.write(axiomWithLiteralValue);
         System.out.println(json.getJson());
     }
 
     @Test
-    void shouldDeserializeAxiom() throws IOException {
+    void shouldDeserializeAxiomWithIri() throws IOException {
         var json = """
                 {
                     "@type" : "AnnotationAssertion",
@@ -61,6 +75,51 @@ public class OWLAnnotationAssertionAxiom_Serialization_TestCase {
 """;
         var axiomContent = tester.parse(json);
         var parsedAxiom = axiomContent.getObject();
-        assertThat(parsedAxiom).isEqualTo(axiom);
+        assertThat(parsedAxiom).isEqualTo(axiomWithIriValue);
+    }
+
+    @Test
+    void shouldDeserializeAxiomWithNodeId() throws IOException {
+        var json = """
+                {
+                    "@type" : "AnnotationAssertion",
+                    "subject" : {
+                        "iri" : "http://example.org/A"
+                    },
+                    "property" : {
+                        "@type" : "AnnotationProperty",
+                        "iri"   : "http://example.org/p"
+                    },
+                    "value" : {
+                        "nodeId" : "B2"
+                    }
+                }
+""";
+        var axiomContent = tester.parse(json);
+        var parsedAxiom = axiomContent.getObject();
+        assertThat(parsedAxiom).isEqualTo(axiomWithAnonymousIndividualValue);
+    }
+
+    @Test
+    void shouldDeserializeAxiomWithLiteral() throws IOException {
+        var json = """
+                {
+                    "@type" : "AnnotationAssertion",
+                    "subject" : {
+                        "iri" : "http://example.org/A"
+                    },
+                    "property" : {
+                        "@type" : "AnnotationProperty",
+                        "iri"   : "http://example.org/p"
+                    },
+                    "value" : {
+                        "value" : "Hello",
+                        "lang" : "en"
+                    }
+                }
+""";
+        var axiomContent = tester.parse(json);
+        var parsedAxiom = axiomContent.getObject();
+        assertThat(parsedAxiom).isEqualTo(axiomWithLiteralValue);
     }
 }
