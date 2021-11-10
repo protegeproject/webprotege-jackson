@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>edu.stanford.protege</groupId>
 	<artifactId>webprotege-jackson</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>0.9.0</version>
 	<name>webprotege-jackson</name>
 	<description>Jackson Serializers and Deserializers for OWL API Objects</description>
 	<properties>
