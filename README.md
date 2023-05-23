@@ -1,5 +1,5 @@
-# webprotege-owlapi-jackson
-Jackson Serializers for some OWL API objects
+# webprotege-jackson
+Jackson Serializers for some WebProtege objects
 
 ## webprotege-jackson on Maven Central
 
