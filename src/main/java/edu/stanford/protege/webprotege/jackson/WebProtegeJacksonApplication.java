@@ -202,6 +202,8 @@ public class WebProtegeJacksonApplication {
 		module.setMixInAnnotation(OWLAnnotationProperty.class, OWLAnnotationPropertyMixin.class);
 		module.addDeserializer(OWLAnnotationPropertyImpl.class, new OWLEntityDeserializer<>(dataFactory, EntityType.ANNOTATION_PROPERTY));
 
+		module.addDeserializer(OWLAnnotationValue.class, new OWLAnnotationValueDeserializer(new OWLLiteralDeserializer(dataFactory), new IriDeserializer()));
+
 		module.setMixInAnnotation(OWLIndividual.class, OWLIndividualMixin.class);
 
 		module.setMixInAnnotation(OWLNamedIndividual.class, OWLNamedIndividualMixin.class);
